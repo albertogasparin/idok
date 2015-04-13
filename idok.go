@@ -18,6 +18,8 @@ const (
 
 func main() {
 
+	log.SetFlags(0)
+
 	// flags
 	xbmcaddr := flag.String("target", "", "xbmc/kodi ip (raspbmc address, ip or hostname)")
 	username := flag.String("login", "", "jsonrpc login (configured in xbmc settings)")
@@ -69,8 +71,8 @@ func main() {
 	}
 
 	if conf.Target == "" {
-		fmt.Println("\033[33mYou must provide the xbmc server address\033[0m")
-		flag.Usage()
+		fmt.Println("Error: you must provide the xbmc server address")
+		//flag.Usage()
 		os.Exit(1)
 	}
 
@@ -81,19 +83,19 @@ func main() {
 	// we don't use stdin, so we should check if scheme is file, youtube or other...
 	if !*stdin {
 		if len(flag.Args()) < 1 {
-			fmt.Println("\033[33mYou must provide a file to serve\033[0m")
-			flag.Usage()
+			fmt.Println("Error: you must provide a stream or a file")
+			//flag.Usage()
 			os.Exit(2)
 		}
 
 		if youtube, vid := utils.IsYoutubeURL(flag.Arg(0)); youtube {
-			log.Println("Youtube video, using youtube addon from XBMC/Kodi")
+			log.Println("Sending Youtube stream URL...")
 			utils.PlayYoutube(vid)
 			os.Exit(0)
 		}
 
 		if ok, local := utils.IsOtherScheme(flag.Arg(0)); ok {
-			log.Println("\033[33mWarning, other scheme could be not supported by you Kodi/XBMC installation. If doesn't work, check addons and stream\033[0m")
+			log.Println("Sending stream URL...")
 			utils.SendBasicStream(flag.Arg(0), local)
 			os.Exit(0)
 		}

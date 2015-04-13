@@ -3,6 +3,7 @@ package utils
 import (
 	"log"
 	"net/url"
+	"os"
 )
 
 // check if argument is a youtube url
@@ -30,8 +31,8 @@ func IsYoutubeURL(query string) (bool, string) {
 func IsOtherScheme(query string) (isscheme bool, islocal bool) {
 	u, err := url.ParseRequestURI(query)
 	if err != nil {
-		log.Println("not schemed")
-		return
+		log.Println("Error: not a valid stream or path")
+		os.Exit(2)
 	}
 	if len(u.Scheme) == 0 {
 		return

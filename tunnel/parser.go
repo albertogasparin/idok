@@ -11,7 +11,7 @@ func parseSSHKeys(keyfile string) (ssh.Signer, error) {
 	content, err := ioutil.ReadFile(keyfile)
 	private, err := ssh.ParsePrivateKey(content)
 	if err != nil {
-		log.Println("Unable to parse private key")
+		log.Println("Error: unable to parse private key")
 	}
 	return private, err
 }

@@ -17,7 +17,7 @@ import (
 func HttpServe(file, dir string, port int) {
 
 	localip, err := utils.GetLocalInterfaceIP()
-	log.Println(localip)
+	// log.Println(localip)
 	if err != nil {
 		log.Fatal(err)
 	}

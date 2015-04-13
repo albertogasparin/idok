@@ -14,6 +14,9 @@ func GetLocalInterfaceIP() (string, error) {
 	if err != nil {
 		log.Fatalf("Error while checking you interfaces: %v", err)
 	}
+	if len(ips) == 0 {
+		return "", errors.New("Error: unable to find Kodi server")
+	}
 	for _, ip := range ips {
 		mask := ip.DefaultMask()
 		for _, iface := range ifaces {
@@ -33,5 +36,5 @@ func GetLocalInterfaceIP() (string, error) {
 			}
 		}
 	}
-	return "", errors.New("Unable to get local ip")
+	return "", errors.New("Error: unable to connect this machine to Kodi")
 }
