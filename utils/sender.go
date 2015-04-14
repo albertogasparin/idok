@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -32,7 +33,12 @@ func Send(scheme, host, file string, port int) <-chan int {
 		log.Fatal(err)
 	}
 	response, _ := ioutil.ReadAll(r.Body)
-	log.Println(string(response))
+	
+	if strings.Contains(string(response), "OK") {
+		log.Println("Streaming...")
+	} else {
+		log.Println(string(response))
+	}
 
 	// and wait media end
 	return checkPlaying()
@@ -47,7 +53,12 @@ func SendBasicStream(uri string, local bool) <-chan int {
 		log.Fatal(err)
 	}
 	response, _ := ioutil.ReadAll(r.Body)
-	log.Println(string(response))
+
+	if strings.Contains(string(response), "OK") {
+		log.Println("Done")
+	} else {
+		log.Println(string(response))
+	}
 
 	// handle CTRL+C to stop
 	go OnQuit()
@@ -64,7 +75,12 @@ func PlayYoutube(vidid string) <-chan int {
 		log.Fatal(err)
 	}
 	response, _ := ioutil.ReadAll(r.Body)
-	log.Println(string(response))
+	
+	if strings.Contains(string(response), "OK") {
+		log.Println("Done")
+	} else {
+		log.Println(string(response))
+	}
 
 	// handle CTRL+C to stop
 	go OnQuit()

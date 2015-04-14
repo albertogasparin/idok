@@ -16,8 +16,9 @@ import (
 // from this port
 func HttpServe(file, dir string, port int) {
 
+	log.Println("Setting up streaming server")
+
 	localip, err := utils.GetLocalInterfaceIP()
-	// log.Println(localip)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -37,8 +38,9 @@ func HttpServe(file, dir string, port int) {
 // Serve STDIN stream from a local port
 func TCPServeStdin(port int) {
 
+	log.Println("Setting up streaming server")
+
 	localip, err := utils.GetLocalInterfaceIP()
-	log.Println(localip)
 	if err != nil {
 		log.Fatal(err)
 	}
